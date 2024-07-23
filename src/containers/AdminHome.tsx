@@ -1,5 +1,5 @@
-import AdminDishes from "./AdminDishes.tsx";
 import {NavLink} from "react-router-dom";
+import AdminDishes from "../components/AdminDishes.tsx";
 
 const AdminHome = () => {
     return (
@@ -12,7 +12,6 @@ const AdminHome = () => {
                     <NavLink to={'/admin/create'}>Add new dish</NavLink>
                 </div>
             </div>
-
             <AdminDishes />
         </div>
     );
