@@ -4,9 +4,10 @@ import AdminHome from "./containers/AdminHome.tsx";
 import Home from "./containers/Home.tsx";
 import AdminDishes from "./containers/AdminDishes.tsx";
 import AdminOrders from "./containers/AdminOrders.tsx";
+import CreateEditForm from "./components/CreateEditForm.tsx";
 
 const App = () => {
-    const {path} = useParams();
+
     return(
         <>
             <div style={{
@@ -22,13 +23,15 @@ const App = () => {
             </div>
             <hr/>
 
-
             <Routes>
                 <Route path="/" element={(
                     <Home/>
                 )}/>
                 <Route path="/admin" element={(
                     <AdminHome/>
+                )}/>
+                <Route path="/admin/create" element={(
+                    <CreateEditForm/>
                 )}/>
                 <Route path="/admin/dishes" element={(
                     <AdminDishes/>
