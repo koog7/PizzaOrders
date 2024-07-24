@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-interface DishProps{
+export interface DishProps{
     title: string;
     price: number;
     img: string;
