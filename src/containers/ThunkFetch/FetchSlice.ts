@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axiosAPI from "../../axios/AxiosAPI.ts";
+import {RootState} from "../../app/slice.ts";
 
 export interface DishProps{
     id?: string;
@@ -19,7 +20,14 @@ const initialState: DishState = {
     loading: false,
     error: false,
 }
-
+export const getDish = createAsyncThunk<DishProps[], void, {state: RootState}>('dishes/getDishes', async () => {
+    try {
+        const response = await axiosAPI.get(`/pizzaturtle/dishes.json`);
+        return Object.keys(response.data).map(key => ({...response.data[key], id: key}));
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
 export const postDish = createAsyncThunk<DishProps, DishProps>('dishes/postDish', async (newDish) => {
     try {
         const response = await axiosAPI.post('/pizzaturtle/dishes.json', newDish);
@@ -46,8 +54,18 @@ export const DishesSlice = createSlice({
             .addCase(postDish.fulfilled, (state:DishState, action: PayloadAction<DishProps>) => {
                 state.dishes.push(action.payload);
                 state.loading = false;
+                console.log(action.payload , '')
             })
             .addCase(postDish.rejected, (state:DishState) => {
+                state.loading = false;
+                state.error = true;
+            }).addCase(getDish.pending, (state:DishState) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(getDish.fulfilled, (state:DishState, action: PayloadAction<DishProps[]>) => {
+                state.dishes = action.payload;
+                state.loading = false;
+            }).addCase(getDish.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
             });

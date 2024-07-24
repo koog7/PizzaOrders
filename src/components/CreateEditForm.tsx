@@ -1,7 +1,8 @@
-import {ChangeEvent, FormEvent, useState} from "react";
-import {DishProps, postDish} from "../containers/ThunkFetch/FetchSlice.ts";
-import {useDispatch} from "react-redux";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {DishProps, getDish, postDish} from "../containers/ThunkFetch/FetchSlice.ts";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import {RootState} from "../app/slice.ts";
 
 const CreateEditForm = () => {
 
@@ -12,6 +13,7 @@ const CreateEditForm = () => {
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const DishFollow = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setDishData((prevData) => ({...prevData, [name]: value}));
@@ -22,6 +24,7 @@ const CreateEditForm = () => {
         await dispatch(postDish(DishData));
         await navigate('/admin');
     }
+
     return (
         <div className="form-container">
             <form onSubmit={FormSubmit}>

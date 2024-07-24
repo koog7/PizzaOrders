@@ -1,15 +1,19 @@
-const AdminDishes = () => {
+import {DishProps} from "../containers/ThunkFetch/FetchSlice.ts";
+
+
+const AdminDishes: React.FC<DishProps> = ({title , price , img}) => {
+
     return (
         <div>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                 <div>
-                    <img width={'100px'} src={'https://www.hearthandfirepizza.com/cdn/shop/products/product-beauty-the-margherita.png?v=1656423819'} alt={'Dish'}/>
+                    <img width={'100px'} src={`${img}`} alt={'Dish'}/>
                 </div>
                 <div>
-                    <h4>Margarita</h4>
+                    <h4>{title}</h4>
                 </div>
                 <div>
-                    450 KGS
+                    {price} KGS
                 </div>
                 <div>
                     <button style={{marginRight:'10px'}}>Edit</button>
