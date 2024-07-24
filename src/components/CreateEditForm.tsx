@@ -1,5 +1,7 @@
-import {ChangeEvent, useState} from "react";
-import {DishProps} from "../containers/ThunkFetch/FetchSlice.ts";
+import {ChangeEvent, FormEvent, useState} from "react";
+import {DishProps, postDish} from "../containers/ThunkFetch/FetchSlice.ts";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const CreateEditForm = () => {
 
@@ -8,15 +10,21 @@ const CreateEditForm = () => {
         price: 0,
         img: '',
     });
-
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const DishFollow = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setDishData((prevData) => ({...prevData, [name]: value}));
     };
 
+    const FormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        await dispatch(postDish(DishData));
+        await navigate('/admin');
+    }
     return (
         <div className="form-container">
-            <form>
+            <form onSubmit={FormSubmit}>
                 <div className={"input-group"}>
                     <label htmlFor="title">Title</label>
                     <input type="text" name="title" placeholder="Enter the title" value={DishData.title} onChange={DishFollow}/>
@@ -27,7 +35,7 @@ const CreateEditForm = () => {
                 </div>
                 <div className={"input-group"}>
                     <label htmlFor="image">Image</label>
-                    <input type="url" name="image" placeholder="Enter the url" value={DishData.img} onChange={DishFollow}/>
+                    <input type="url" name="img" placeholder="Enter the url" value={DishData.img} onChange={DishFollow}/>
                 </div>
                 <div className={"input-group"}>
                     <button type="submit">Submit</button>

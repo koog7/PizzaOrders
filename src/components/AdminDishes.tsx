@@ -3,7 +3,7 @@ const AdminDishes = () => {
         <div>
             <div style={{display:'flex', alignItems:'center', justifyContent:'space-between'}}>
                 <div>
-                    <img width={'100px'} src={'https://www.hearthandfirepizza.com/cdn/shop/products/product-beauty-the-margherita.png?v=1656423819'}/>
+                    <img width={'100px'} src={'https://www.hearthandfirepizza.com/cdn/shop/products/product-beauty-the-margherita.png?v=1656423819'} alt={'Dish'}/>
                 </div>
                 <div>
                     <h4>Margarita</h4>

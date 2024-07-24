@@ -1,6 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import axiosAPI from "../../axios/AxiosAPI.ts";
 
 export interface DishProps{
+    id?: string;
     title: string;
     price: number;
     img: string;
@@ -18,6 +20,15 @@ const initialState: DishState = {
     error: false,
 }
 
+export const postDish = createAsyncThunk<DishProps, DishProps>('dishes/postDish', async (newDish) => {
+    try {
+        const response = await axiosAPI.post('/pizzaturtle/dishes.json', newDish);
+        return { ...newDish, id: response.data.name };
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
 export const DishesSlice = createSlice({
     name: 'dishes',
     initialState,
@@ -25,6 +36,21 @@ export const DishesSlice = createSlice({
         consoleLogger: (state) => {
             console.log(state.dishes)
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(postDish.pending, (state:DishState) => {
+                state.loading = true;
+                state.error = false;
+            })
+            .addCase(postDish.fulfilled, (state:DishState, action: PayloadAction<DishProps>) => {
+                state.dishes.push(action.payload);
+                state.loading = false;
+            })
+            .addCase(postDish.rejected, (state:DishState) => {
+                state.loading = false;
+                state.error = true;
+            });
     },
 })
 
