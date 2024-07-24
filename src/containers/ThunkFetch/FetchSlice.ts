@@ -55,6 +55,7 @@ export const DishesSlice = createSlice({
                 state.dishes.push(action.payload);
                 state.loading = false;
                 console.log(action.payload , '')
+                console.log(state.dishes)
             })
             .addCase(postDish.rejected, (state:DishState) => {
                 state.loading = false;

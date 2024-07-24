@@ -15,10 +15,12 @@ const AdminDishes: React.FC<DishProps> = ({title , price , img}) => {
                 <div>
                     {price} KGS
                 </div>
-                <div>
-                    <button style={{marginRight:'10px'}}>Edit</button>
-                    <button>Delete</button>
-                </div>
+                {location.pathname === '/admin' && (
+                    <div>
+                        <button style={{ marginRight: '10px' }}>Edit</button>
+                        <button>Delete</button>
+                    </div>
+                )}
             </div>
         </div>
     );
