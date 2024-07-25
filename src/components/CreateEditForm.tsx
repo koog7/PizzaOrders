@@ -1,5 +1,5 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {DishProps, postDish, putContact} from "../containers/ThunkFetch/FetchSlice.ts";
+import {DishProps, postDish, putDish} from "../containers/ThunkFetch/FetchSlice.ts";
 import {useDispatch} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import axiosAPI from "../axios/AxiosAPI.ts";
@@ -32,7 +32,7 @@ const CreateEditForm = () => {
     const FormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if(id){
-            await dispatch(putContact({ id, updatedContact: DishData }));
+            await dispatch(putDish({ id, updatedContact: DishData }));
             await navigate('/admin');
         }else{
             await dispatch(postDish(DishData));
