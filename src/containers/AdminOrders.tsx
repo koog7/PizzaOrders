@@ -1,6 +1,7 @@
 import {useDispatch} from "react-redux";
 import {useEffect, useState} from "react";
 import axiosAPI from "../axios/AxiosAPI.ts";
+import {deleteDish, deleteOrder} from "./ThunkFetch/FetchSlice.ts";
 
 interface Order {
     id: string;
@@ -9,6 +10,7 @@ interface Order {
 
 const AdminOrders = () => {
 
+    const dispatch = useDispatch();
     const [orders, setOrders] = useState<Order[]>([]);
     const [dishes, setDishes] = useState({});
     const [loading, setLoading] = useState<boolean>(false);
@@ -38,6 +40,18 @@ const AdminOrders = () => {
 
         fetchOrdersAndDishes();
     }, []);
+
+    const handleCompleteOrder = async (orderId: string) => {
+        setLoading(true);
+        try {
+            await dispatch(deleteOrder(orderId));
+            await setOrders(orders.filter(order => order.id !== orderId))
+        } catch (error) {
+            console.error('Error removing order:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="admin-orders">
@@ -82,7 +96,7 @@ const AdminOrders = () => {
                             <div className="order-footer">
                                 <p>Delivery: 150 KGS</p>
                                 <strong>Total Price: {totalPrice + 150} KGS</strong>
-                                <button className="complete-order-button">Complete order</button>
+                                <button className="complete-order-button" onClick={() => handleCompleteOrder(order.id)}>Complete order</button>
                             </div>
                         </li>
                     );

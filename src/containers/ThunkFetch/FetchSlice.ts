@@ -58,7 +58,7 @@ export const putDish = createAsyncThunk<DishProps, { id: string, updatedContact:
         console.error('Error:', error);
     }
 });
-export const deleteDish = createAsyncThunk<string, string, { state: RootState }>('contacts/deleteContact', async (id:string) => {
+export const deleteDish = createAsyncThunk<string, string, { state: RootState }>('dishes/deleteContact', async (id:string) => {
     try {
         await axiosAPI.delete(`/pizzaturtle/dishes/${id}.json`);
         return id;
@@ -67,6 +67,15 @@ export const deleteDish = createAsyncThunk<string, string, { state: RootState }>
     }
 });
 
+export const deleteOrder = createAsyncThunk<string, string, { state: RootState }>('orders/deleteOrder', async (orderId: string) => {
+    try {
+        await axiosAPI.delete(`/pizzaturtle/orders/${orderId}.json`);
+        return orderId;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+});
 export const DishesSlice = createSlice({
     name: 'dishes',
     initialState,
@@ -119,6 +128,15 @@ export const DishesSlice = createSlice({
                 state.loading = false;
                 state.dishes = state.dishes.filter(dish => dish.id !== action.payload);
             }).addCase(deleteDish.rejected, (state: DishState) => {
+                state.loading = false;
+                state.error = true;
+            }).addCase(deleteOrder.pending, (state: DishState) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(deleteOrder.fulfilled, (state: DishState, action: PayloadAction<string>) => {
+                state.loading = false;
+                state.orders = state.orders.filter(order => order.id !== action.payload);
+            }).addCase(deleteOrder.rejected, (state: DishState) => {
                 state.loading = false;
                 state.error = true;
             });
