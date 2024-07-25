@@ -5,6 +5,7 @@ import Home from "./containers/Home.tsx";
 import AdminDishes from "./containers/AdminDishes.tsx";
 import AdminOrders from "./containers/AdminOrders.tsx";
 import CreateEditForm from "./components/CreateEditForm.tsx";
+import NotFound from "./components/NotFound.tsx";
 
 const App = () => {
 
@@ -34,6 +35,9 @@ const App = () => {
             <Routes>
                 <Route path="/" element={(
                     <Home/>
+                )}/>
+                <Route path="*" element={(
+                    <NotFound/>
                 )}/>
                 <Route path="/admin" element={(
                     <AdminHome/>
