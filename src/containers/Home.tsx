@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../app/slice.ts";
-import {getDish} from "./ThunkFetch/FetchSlice.ts";
+import {getDish, sendOrder} from "./ThunkFetch/FetchSlice.ts";
 import AdminDishes from "../components/AdminDishes.tsx";
 
 const Home = () => {
@@ -36,6 +36,12 @@ const Home = () => {
             return newCart;
         });
     }
+    
+    const sendOrders = async () => {
+        await dispatch(sendOrder(cart))
+        setCart({});
+        setOverlay(false)
+    }
 
     return (
         <div>
@@ -68,13 +74,16 @@ const Home = () => {
                                 return (
                                     <div key={key}>
                                         {`${dish.title} x ${cart[key]}`}
-                                        <button onClick={() => deleteDataFromOverlay(key)} style={{marginLeft:'10px'}}>X</button>
+                                        <button onClick={() => deleteDataFromOverlay(key)}
+                                                style={{marginLeft: '10px'}}>X
+                                        </button>
                                     </div>
                                 );
                             })}
                         </div>
                         <div>Delivery: <strong> 150 KGS</strong></div>
                         <div>Total: <strong>{getTotal()} KGS</strong></div>
+                        <button onClick={sendOrders}>Order</button>
                         <button onClick={() => setOverlay(false)}>Close</button>
                     </div>
                 </div>

@@ -37,6 +37,15 @@ export const postDish = createAsyncThunk<DishProps, DishProps>('dishes/postDish'
     }
 });
 
+export const sendOrder = createAsyncThunk<DishProps, DishProps>('dishes/sendDish', async (order) => {
+    try {
+        const response = await axiosAPI.post('/pizzaturtle/orders.json', order);
+        return { ...order, id: response.data.name };
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
 export const DishesSlice = createSlice({
     name: 'dishes',
     initialState,
