@@ -24,8 +24,8 @@ const App = () => {
                 <div>
                     {location.pathname === '/admin' && (
                         <>
-                            <NavLink to={'/admin'} style={{marginRight: '20px'}}>Dishes</NavLink>
-                            <NavLink to={'/admin/orders'}>Orders</NavLink>
+                            <NavLink to={'/admin'} style={{marginRight: '20px', color:'white', textDecoration:'none'}}>Dishes</NavLink>
+                            <NavLink to={'/admin/orders'} style={{marginRight: '20px', color:'white', textDecoration:'none'}}>Orders</NavLink>
                         </>
                     )}
                 </div>

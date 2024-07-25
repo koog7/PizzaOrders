@@ -26,7 +26,7 @@ const AdminHome = () => {
                     <h2>Dishes</h2>
                 </div>
                 <div>
-                    <NavLink to={'/admin/create'}>Add new dish</NavLink>
+                    <NavLink to={'/admin/create'} style={{color:'white' , textDecoration:'none', padding:'10px', border:'1px solid white', borderRadius:'10px'}}>Add new dish</NavLink>
                 </div>
             </div>
             {dishes.length > 0 ? (
