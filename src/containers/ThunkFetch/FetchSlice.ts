@@ -58,7 +58,7 @@ export const putDish = createAsyncThunk<DishProps, { id: string, updatedContact:
         console.error('Error:', error);
     }
 });
-export const deleteDish = createAsyncThunk<string, string, { state: RootState }>('contacts/deleteContact', async (id:string) => {
+export const deleteDish = createAsyncThunk<string, string, { state: RootState }>('dishes/deleteContact', async (id:string) => {
     try {
         await axiosAPI.delete(`/pizzaturtle/dishes/${id}.json`);
         return id;
