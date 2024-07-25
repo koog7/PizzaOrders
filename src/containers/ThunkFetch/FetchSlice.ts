@@ -55,18 +55,13 @@ export const DishesSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(postDish.pending, (state:DishState) => {
+        builder.addCase(postDish.pending, (state:DishState) => {
                 state.loading = true;
                 state.error = false;
-            })
-            .addCase(postDish.fulfilled, (state:DishState, action: PayloadAction<DishProps>) => {
+            }).addCase(postDish.fulfilled, (state:DishState, action: PayloadAction<DishProps>) => {
                 state.dishes.push(action.payload);
                 state.loading = false;
-                console.log(action.payload , '')
-                console.log(state.dishes)
-            })
-            .addCase(postDish.rejected, (state:DishState) => {
+            }).addCase(postDish.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
             }).addCase(getDish.pending, (state:DishState) => {
@@ -76,6 +71,15 @@ export const DishesSlice = createSlice({
                 state.dishes = action.payload;
                 state.loading = false;
             }).addCase(getDish.rejected, (state:DishState) => {
+                state.loading = false;
+                state.error = true;
+            }).addCase(sendOrder.pending, (state:DishState) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(sendOrder.fulfilled, (state:DishState) => {
+                state.loading = false;
+                state.error = false;
+            }).addCase(sendOrder.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
             });
