@@ -50,8 +50,7 @@ export const sendOrder = createAsyncThunk<DishProps, DishProps>('dishes/sendDish
         console.error('Error:', error);
     }
 });
-
-export const putContact = createAsyncThunk<DishProps, { id: string, updatedContact: DishProps }>('contacts/putContact', async ({id, updatedContact}) => {
+export const putDish = createAsyncThunk<DishProps, { id: string, updatedContact: DishProps }>('contacts/putContact', async ({id, updatedContact}) => {
     try {
         const response = await axiosAPI.put<DishProps>(`/pizzaturtle/dishes/${id}.json`, updatedContact);
         return response.data;
@@ -59,7 +58,6 @@ export const putContact = createAsyncThunk<DishProps, { id: string, updatedConta
         console.error('Error:', error);
     }
 });
-
 export const deleteDish = createAsyncThunk<string, string, { state: RootState }>('contacts/deleteContact', async (id:string) => {
     try {
         await axiosAPI.delete(`/pizzaturtle/dishes/${id}.json`);
@@ -87,7 +85,6 @@ export const DishesSlice = createSlice({
             }).addCase(postDish.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
-
             }).addCase(getDish.pending, (state:DishState) => {
                 state.loading = true;
                 state.error = false;
@@ -97,7 +94,6 @@ export const DishesSlice = createSlice({
             }).addCase(getDish.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
-
             }).addCase(sendOrder.pending, (state:DishState) => {
                 state.loading = true;
                 state.error = false;
@@ -107,12 +103,21 @@ export const DishesSlice = createSlice({
             }).addCase(sendOrder.rejected, (state:DishState) => {
                 state.loading = false;
                 state.error = true;
+            }).addCase(putDish.pending, (state:DishState) => {
+                state.loading = true;
+                state.error = false;
+            }).addCase(putDish.fulfilled, (state:DishState) => {
+                state.loading = false;
+                state.error = false;
+            }).addCase(putDish.rejected, (state:DishState) => {
+                state.loading = false;
+                state.error = true;
             }).addCase(deleteDish.pending, (state: DishState) => {
                 state.loading = true;
                 state.error = false;
             }).addCase(deleteDish.fulfilled, (state: DishState, action: PayloadAction<string>) => {
                 state.loading = false;
-                state.dishes = state.dishes.filter(todo => todo.id !== action.payload);
+                state.dishes = state.dishes.filter(dish => dish.id !== action.payload);
             }).addCase(deleteDish.rejected, (state: DishState) => {
                 state.loading = false;
                 state.error = true;
