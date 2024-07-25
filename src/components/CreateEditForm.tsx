@@ -1,8 +1,8 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {DishProps, getDish, postDish} from "../containers/ThunkFetch/FetchSlice.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import {RootState} from "../app/slice.ts";
+import {DishProps, postDish, putContact} from "../containers/ThunkFetch/FetchSlice.ts";
+import {useDispatch} from "react-redux";
+import {useNavigate, useParams} from "react-router-dom";
+import axiosAPI from "../axios/AxiosAPI.ts";
 
 const CreateEditForm = () => {
 
@@ -13,7 +13,17 @@ const CreateEditForm = () => {
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {id} = useParams();
 
+    useEffect(  () => {
+        if(id){
+            const getData = async () => {
+                const response = await axiosAPI<DishProps>.get(`/pizzaturtle/dishes/${id}.json`);
+                setDishData(response.data);
+            }
+            getData();
+        }
+    }, [id]);
     const DishFollow = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setDishData((prevData) => ({...prevData, [name]: value}));
@@ -21,8 +31,14 @@ const CreateEditForm = () => {
 
     const FormSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        await dispatch(postDish(DishData));
-        await navigate('/admin');
+        if(id){
+            await dispatch(putContact({ id, updatedContact: DishData }));
+            await navigate('/admin');
+        }else{
+            await dispatch(postDish(DishData));
+            await navigate('/admin');
+        }
+
     }
 
     return (

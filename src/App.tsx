@@ -43,6 +43,9 @@ const App = () => {
                 <Route path="/admin" element={(
                     <AdminHome/>
                 )}/>
+                <Route path="/admin/:id/edit" element={(
+                    <CreateEditForm/>
+                )}/>
                 <Route path="/admin/create" element={(
                     <CreateEditForm/>
                 )}/>
