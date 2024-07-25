@@ -20,11 +20,12 @@ const App = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between'
             }}>
-                <h2 style={{marginLeft: '10px'}}><NavLink className="nav-link" to={location.pathname === '/admin' ?  '/admin': '/'}  style={{textDecoration: 'none', color: 'white'}}>Turtle Pizza {location.pathname === '/admin' && 'Admin'}</NavLink></h2>
+                {location.pathname === '/admin' && (<h2 style={{marginLeft: '10px'}}><NavLink className="nav-link" to={'/admin'} style={{textDecoration: 'none', color: 'white'}}>Turtle Pizza Admin</NavLink></h2>)}
+                {location.pathname === '/' && (<h2 style={{marginLeft: '10px'}}><NavLink className="nav-link" to={'/'} style={{textDecoration: 'none', color: 'white'}}>Turtle Pizza</NavLink></h2>)}
                 <div>
                     {location.pathname === '/admin' && (
                         <>
-                            <NavLink to={'/admin/dishes'} style={{ marginRight: '20px' }}>Dishes</NavLink>
+                            <NavLink to={'/admin/dishes'} style={{marginRight: '20px'}}>Dishes</NavLink>
                             <NavLink to={'/admin/orders'}>Orders</NavLink>
                         </>
                     )}
