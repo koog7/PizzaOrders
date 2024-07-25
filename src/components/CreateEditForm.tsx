@@ -1,8 +1,9 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {DishProps, postDish, putDish} from "../containers/ThunkFetch/FetchSlice.ts";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import axiosAPI from "../axios/AxiosAPI.ts";
+import {RootState} from "../app/slice.ts";
 
 const CreateEditForm = () => {
 
@@ -14,6 +15,7 @@ const CreateEditForm = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {id} = useParams();
+    const { loading, error } = useSelector((state: RootState) => state.dishes);
 
     useEffect(  () => {
         if(id){
@@ -43,18 +45,25 @@ const CreateEditForm = () => {
 
     return (
         <div className="form-container">
+            {error && <div className="error">Something gone wrong...</div>}
+            <div id="loader-container" style={{display: loading ? 'block' : 'none'}}>
+                <div className="loader"></div>
+            </div>
             <form onSubmit={FormSubmit}>
                 <div className={"input-group"}>
                     <label htmlFor="title">Title</label>
-                    <input type="text" name="title" placeholder="Enter the title" value={DishData.title} onChange={DishFollow}/>
+                    <input type="text" name="title" placeholder="Enter the title" value={DishData.title}
+                           onChange={DishFollow}/>
                 </div>
                 <div className={"input-group"}>
                     <label htmlFor="price">Price</label>
-                    <input type="number" name="price" placeholder="Enter the price" value={DishData.price} onChange={DishFollow}/>
+                    <input type="number" name="price" placeholder="Enter the price" value={DishData.price}
+                           onChange={DishFollow}/>
                 </div>
                 <div className={"input-group"}>
                     <label htmlFor="image">Image</label>
-                    <input type="url" name="img" placeholder="Enter the url" value={DishData.img} onChange={DishFollow}/>
+                    <input type="url" name="img" placeholder="Enter the url" value={DishData.img}
+                           onChange={DishFollow}/>
                 </div>
                 <div className={"input-group"}>
                     <button type="submit">Submit</button>

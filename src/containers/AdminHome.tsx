@@ -15,10 +15,13 @@ const AdminHome = () => {
     }, [dispatch]);
 
 
-    console.log(dishes)
     return (
         <div>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+            {error && <div className="error">Something gone wrong...</div>}
+            <div id="loader-container" style={{display: loading ? 'block' : 'none'}}>
+                <div className="loader"></div>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div>
                     <h2>Dishes</h2>
                 </div>

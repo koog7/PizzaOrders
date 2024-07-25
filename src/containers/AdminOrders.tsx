@@ -1,7 +1,8 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import axiosAPI from "../axios/AxiosAPI.ts";
 import {deleteOrder} from "./ThunkFetch/FetchSlice.ts";
+import {RootState} from "../app/slice.ts";
 
 interface Order {
     id: string;
@@ -14,7 +15,7 @@ const AdminOrders = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [dishes, setDishes] = useState({});
     const [loading, setLoading] = useState<boolean>(false);
-
+    const { error } = useSelector((state: RootState) => state.dishes);
 
     useEffect(() => {
         const fetchOrdersAndDishes = async () => {
@@ -58,6 +59,7 @@ const AdminOrders = () => {
             <div id="loader-container" style={{display: loading ? 'block' : 'none'}}>
                 <div className="loader"></div>
             </div>
+            {error && <div className="error">Something gone wrong...</div>}
             <h2>Orders</h2>
             <ul className="order-list">
                 {orders.map(order => {

@@ -45,8 +45,12 @@ const Home = () => {
 
     return (
         <div>
+            {error && <div className="error">Something gone wrong...</div>}
+            <div id="loader-container" style={{display: loading ? 'block' : 'none'}}>
+                <div className="loader"></div>
+            </div>
             <div style={{marginBottom: '20px'}}>Order total: {getTotal()} KGS
-                <button onClick={() => setOverlay(true)} style={{marginLeft:'20px'}}>Checkout</button>
+                <button onClick={() => setOverlay(true)} style={{marginLeft: '20px'}}>Checkout</button>
             </div>
 
             {dishes.length > 0 ? (
