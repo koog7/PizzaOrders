@@ -27,6 +27,16 @@ const Home = () => {
         dispatch(getDish())
     }, [dispatch]);
 
+    const deleteDataFromOverlay = (id: string) => {
+        setCart(prevCart => {
+            const newCart = { ...prevCart };
+            if (newCart[id]) {
+                delete newCart[id];
+            }
+            return newCart;
+        });
+    }
+
     return (
         <div>
             <div style={{marginBottom: '20px'}}>Order total: {getTotal()} KGS
@@ -58,11 +68,13 @@ const Home = () => {
                                 return (
                                     <div key={key}>
                                         {`${dish.title} x ${cart[key]}`}
+                                        <button onClick={() => deleteDataFromOverlay(key)} style={{marginLeft:'10px'}}>X</button>
                                     </div>
                                 );
                             })}
                         </div>
-                        <div>Total: {getTotal()} KGS</div>
+                        <div>Delivery: <strong> 150 KGS</strong></div>
+                        <div>Total: <strong>{getTotal()} KGS</strong></div>
                         <button onClick={() => setOverlay(false)}>Close</button>
                     </div>
                 </div>
