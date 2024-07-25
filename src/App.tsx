@@ -1,8 +1,7 @@
 import './App.css'
-import {NavLink, Route, Routes, useParams} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import AdminHome from "./containers/AdminHome.tsx";
 import Home from "./containers/Home.tsx";
-import AdminDishes from "./containers/AdminDishes.tsx";
 import AdminOrders from "./containers/AdminOrders.tsx";
 import CreateEditForm from "./components/CreateEditForm.tsx";
 import NotFound from "./components/NotFound.tsx";
@@ -25,7 +24,7 @@ const App = () => {
                 <div>
                     {location.pathname === '/admin' && (
                         <>
-                            <NavLink to={'/admin/dishes'} style={{marginRight: '20px'}}>Dishes</NavLink>
+                            <NavLink to={'/admin'} style={{marginRight: '20px'}}>Dishes</NavLink>
                             <NavLink to={'/admin/orders'}>Orders</NavLink>
                         </>
                     )}
@@ -48,9 +47,6 @@ const App = () => {
                 )}/>
                 <Route path="/admin/create" element={(
                     <CreateEditForm/>
-                )}/>
-                <Route path="/admin/dishes" element={(
-                    <AdminDishes/>
                 )}/>
                 <Route path="/admin/orders" element={(
                     <AdminOrders/>
